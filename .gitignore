@@ -25,3 +25,6 @@ go.work.sum
 token.json
 credentials.json
 client_secret_*.json
+
+# VSCode
+.vscode/
