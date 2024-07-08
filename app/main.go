@@ -86,7 +86,7 @@ func (filter tFilter) subject() string {
 }
 
 type tStatement struct {
-	Output string `short:"O" long:"output" default:"stdout" optional:"non-empty" optional-value:"gmail" description:"output path: stdout - if missing, else output to disk; value_of_param - template for the name, or gmail - if option occurs without an argument"`
+	Output string `short:"O" long:"output" default:"stdout" optional:"non-empty" optional-value:"gmail" description:"output path: stdout - if missing, else output to disk; value_of_param - template for the name (the equal sign (=) is required), or gmail - if option occurs without an argument"`
 	Split  bool   `short:"S" long:"split" description:"split output"`
 	Format string `short:"F" long:"format" choice:"json" choice:"txt" default:"json" description:"output format"`
 	Area   string `short:"A" long:"area" choice:"raw" choice:"all" choice:"small" choice:"easy" default:"all" description:"fullness of the output"`

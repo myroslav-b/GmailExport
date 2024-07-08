@@ -34,8 +34,12 @@ func prepareMessage(message *gmail.Message, area string) (iAreaMolder, error) {
 	//var preparedMessage tMessageAllArea
 	var err error
 	switch area {
-	case "smart":
-		return nil, nil
+	case "small":
+		preparedMessage, err = areas.PrepareSmallArea(message)
+		if err != nil {
+			return nil, err
+		}
+		return preparedMessage, nil
 	case "easy":
 		preparedMessage, err = areas.PrepareEasyArea(message)
 		if err != nil {
