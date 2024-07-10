@@ -28,7 +28,6 @@ func export(srv *gmail.Service, user string, opts tOpts) error {
 	if opts.Statement.Split {
 		for i, block := range outBlocks {
 			if opts.Statement.Output != "stdout" {
-				//filePath := opts.Statement.Output + fmt.Sprintf("_%d", i)
 				filePath := generateFileName(opts.Statement.Output, strconv.Itoa(i))
 				file, err := os.OpenFile(filePath, os.O_EXCL|os.O_CREATE|os.O_WRONLY, 0644)
 				if err != nil {
@@ -56,9 +55,9 @@ func export(srv *gmail.Service, user string, opts tOpts) error {
 			leftBracket = "["
 			rightBracket = "]"
 		case "txt":
-			coma = ""
-			leftBracket = ""
-			rightBracket = ""
+			coma = "=== End Message ===\r\n\r\n\r\n=== Begin Message ===\r\n"
+			leftBracket = "=== Begin Message ===\r\n"
+			rightBracket = "=== End Message ===\r\n"
 		default:
 			return fmt.Errorf("unknown output file format")
 		}

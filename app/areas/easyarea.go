@@ -77,11 +77,11 @@ func (Ma TMessageEasyArea) String() string {
 	St = St + fmt.Sprintf("%s: %v\r\n", "Size Estimate", Ma.SizeEstimate)
 	St = St + fmt.Sprintf("%s: %s\r\n", "Snippet", Ma.Snippet)
 	St = St + fmt.Sprintf("%s: %s\r\n", "Thread ID", Ma.ThreadId)
-	St = St + fmt.Sprintf("\r\n%s\r\n", "=== Headers ===")
+	St = St + fmt.Sprintf("%s\r\n", "--- Headers ---")
 	for _, keyHeader := range Ma.Headers {
-		St = St + fmt.Sprintf("\r\n%s: %s\r\n", keyHeader.Name, keyHeader.Value)
+		St = St + fmt.Sprintf("%s: %s\r\n", keyHeader.Name, keyHeader.Value)
 	}
-	St = St + fmt.Sprintf("\r\n%s\r\n%s\r\n", "=== Plain Text ===", Ma.PlainText)
+	St = St + fmt.Sprintf("%s\r\n%s\r\n", "--- Plain Text ---", Ma.PlainText)
 	return St
 }
 

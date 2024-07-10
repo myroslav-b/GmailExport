@@ -19,10 +19,6 @@ type TMessageRawArea struct {
 	InternalDate int64 `json:"internalDate,omitempty,string"`
 	// LabelIds: List of IDs of labels applied to this message.
 	LabelIds []string `json:"labelIds,omitempty"`
-	//// Raw: The entire email message in an RFC 2822 formatted and base64url encoded
-	//// string. Returned in `messages.get` and `drafts.get` responses when the
-	//// `format=RAW` parameter is supplied.
-	////Raw string `json:"raw,omitempty"`
 	// SizeEstimate: Estimated size in bytes of the message.
 	SizeEstimate int64 `json:"sizeEstimate,omitempty"`
 	// Snippet: A short part of the message text.
@@ -40,7 +36,6 @@ type TMessageRawArea struct {
 
 func PrepareRawArea(m *gmail.Message) (TMessageRawArea, error) {
 	pm := new(TMessageRawArea)
-	//var err error
 	pm.Id = m.Id
 	pm.InternalDate = m.InternalDate
 	pm.LabelIds = m.LabelIds
@@ -68,7 +63,7 @@ func (Ma TMessageRawArea) String() string {
 	St = St + fmt.Sprintf("%s: %v\r\n", "Size Estimate", Ma.SizeEstimate)
 	St = St + fmt.Sprintf("%s: %s\r\n", "Snippet", Ma.Snippet)
 	St = St + fmt.Sprintf("%s: %s\r\n", "Thread ID", Ma.ThreadId)
-	St = St + fmt.Sprintf("%s:\r\n", "Raw Body")
+	St = St + fmt.Sprintf("%s:\r\n", "--- Raw Body ---")
 	St = St + fmt.Sprintf("%s\r\n", Ma.Raw)
 	return St
 }

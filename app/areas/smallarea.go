@@ -40,7 +40,7 @@ type TMessageSmallArea struct {
 	To string `json:"to,omitempty"`
 	// Subject
 	Subject string `json:"subject,omitempty"`
-	//PlainText:
+	// PlainText:
 	PlainText string `json:"plainText,omitempty"`
 }
 
@@ -88,13 +88,13 @@ func (Ma TMessageSmallArea) String() string {
 	St = St + fmt.Sprintf("%s: %v\r\n", "Size Estimate", Ma.SizeEstimate)
 	St = St + fmt.Sprintf("%s: %s\r\n", "Snippet", Ma.Snippet)
 	St = St + fmt.Sprintf("%s: %s\r\n", "Thread ID", Ma.ThreadId)
-	St = St + fmt.Sprintf("\r\n%s\r\n", "=== Headers ===")
+	St = St + fmt.Sprintf("%s\r\n", "--- Headers ---")
 	St = St + fmt.Sprintf("%s: %s\r\n", "Message-ID", Ma.MessageId)
 	St = St + fmt.Sprintf("%s: %s\r\n", "Date", Ma.Date)
 	St = St + fmt.Sprintf("%s: %s\r\n", "From", Ma.From)
 	St = St + fmt.Sprintf("%s: %s\r\n", "To", Ma.To)
 	St = St + fmt.Sprintf("%s: %s\r\n", "Subject", Ma.Subject)
-	St = St + fmt.Sprintf("\r\n%s\r\n%s\r\n", "=== Plain Text ===", Ma.PlainText)
+	St = St + fmt.Sprintf("%s\r\n%s\r\n", "--- Plain Text ---", Ma.PlainText)
 	return St
 }
 
