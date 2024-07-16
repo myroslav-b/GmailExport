@@ -7,12 +7,14 @@ import (
 	"google.golang.org/api/gmail/v1"
 )
 
+// iAreaMolder interface defines methods for converting message data to different formats
 type iAreaMolder interface {
-	//prepare(m gmail.Message) (tMessageAllArea, error)
 	ToJson() ([]byte, error)
 	ToTxt() ([]byte, error)
 }
 
+// performance processes a list of messages according to the given statement
+// and returns the formatted output as a slice of byte slices
 func performance(listMessages *tListMessages, statement tStatement) ([][]byte, error) {
 	outBlocks := make([][]byte, 0)
 	for _, message := range listMessages.messages {
@@ -29,6 +31,7 @@ func performance(listMessages *tListMessages, statement tStatement) ([][]byte, e
 	return outBlocks, nil
 }
 
+// prepareMessage prepares a Gmail message according to the specified area
 func prepareMessage(message *gmail.Message, area string) (iAreaMolder, error) {
 	var preparedMessage iAreaMolder
 	//var preparedMessage tMessageAllArea
@@ -63,6 +66,7 @@ func prepareMessage(message *gmail.Message, area string) (iAreaMolder, error) {
 	}
 }
 
+// toFormat converts a prepared message to the specified format (JSON or TXT)
 func toFormat(prepMessages iAreaMolder, format string) ([]byte, error) {
 	switch format {
 	case "json":
@@ -81,21 +85,3 @@ func toFormat(prepMessages iAreaMolder, format string) ([]byte, error) {
 		return nil, errors.New("undefined parameter Format")
 	}
 }
-
-/*
-func performance(listMessages *tListMessages, statement tStatement) error {
-	//fmt.Printf("%v\n", listMessages)
-
-	err := output([]byte(listMessages), statement.Output)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func output(b []byte, st string) error {
-
-	return nil
-}
-*/

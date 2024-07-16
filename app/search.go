@@ -8,9 +8,7 @@ import (
 
 // tListMessages represents a collection of Gmail messages and the estimated total number of results.
 type tListMessages struct {
-	// Messages: List of messages.
-	messages []*gmail.Message
-	// ResultSizeEstimate: Estimated total number of results.
+	messages           []*gmail.Message
 	resultSizeEstimate int64
 }
 
@@ -46,17 +44,15 @@ func search(srv *gmail.Service, user string, filter tFilter) (*tListMessages, er
 		if err != nil {
 			return nil, err
 		}
-
 		// Add the retrieved messages to the list and update the result size estimate.
 		listMessages.addList(listMessagesResp.Messages, listMessagesResp.ResultSizeEstimate)
-
 		// Update the page token for the next iteration.
 		pageToken = listMessagesResp.NextPageToken
 		startFlag = false
 		// Introduce a short delay to avoid hitting rate limits.
 		// There is probably a short delay between when a next_page_token is issued and when it will become valid.
 		// https://stackoverflow.com/questions/41994292/trouble-looping-through-google-places-api-with-pagetoken-in-go
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(10 * time.Millisecond)
 	}
 
 	for i, m := range listMessages.messages {

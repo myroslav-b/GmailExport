@@ -8,6 +8,7 @@ import (
 	"google.golang.org/api/gmail/v1"
 )
 
+// TMessageAllArea defines a structure to store information about a Gmail message.
 type TMessageAllArea struct {
 	// Id: The immutable ID of the message.
 	Id string `json:"id,omitempty"`
@@ -30,17 +31,18 @@ type TMessageAllArea struct {
 	// in compliance with the RFC 2822 (https://tools.ietf.org/html/rfc2822)
 	// standard. 3. The `Subject` headers must match.
 	ThreadId string `json:"threadId,omitempty"`
-	// Headers of message
+	// Headers: Headers of the message.
 	Headers []struct {
 		Name  string `json:"name,omitempty"`
 		Value string `json:"value,omitempty"`
 	} `json:"headers,omitempty"`
-	//PlainText:
+	//PlainText: The plain text body of the message.
 	PlainText string `json:"plainText,omitempty"`
 	// Raw: The entire email message in an RFC 2822 formatted.
 	Raw string `json:"raw,omitempty"`
 }
 
+// PrepareAllArea takes a Gmail message and returns a TMessageAllArea structure with the fields populated.
 func PrepareAllArea(m *gmail.Message) (TMessageAllArea, error) {
 	pm := new(TMessageAllArea)
 	var err error
@@ -72,7 +74,7 @@ func PrepareAllArea(m *gmail.Message) (TMessageAllArea, error) {
 	return *pm, nil
 }
 
-// getPlainTextBody перебирає частини повідомлення, щоб знайти та повернути текстове тіло.
+// getPlainTextBody recursively searches for and returns the plain text body of a message
 func getPlainTextBody(msg *gmail.MessagePart) string {
 	if msg.MimeType == "text/plain" {
 		return msg.Body.Data
@@ -86,6 +88,7 @@ func getPlainTextBody(msg *gmail.MessagePart) string {
 	return ""
 }
 
+// String method returns a formatted string representation of TMessageAllArea
 func (Ma TMessageAllArea) String() string {
 	St := ""
 	St = St + fmt.Sprintf("%s: %s\r\n", "ID", Ma.Id)
@@ -108,11 +111,13 @@ func (Ma TMessageAllArea) String() string {
 	return St
 }
 
+// ToJson method converts the TMessageAllArea structure to a JSON byte array.
 func (Ma TMessageAllArea) ToJson() ([]byte, error) {
 	b, err := json.Marshal(Ma)
 	return b, err
 }
 
+// ToTxt method converts the TMessageAllArea structure to a plain text byte array.
 func (Ma TMessageAllArea) ToTxt() ([]byte, error) {
 	b := []byte(fmt.Sprintf("%+v", Ma))
 	return b, nil

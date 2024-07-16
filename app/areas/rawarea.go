@@ -8,6 +8,7 @@ import (
 	"google.golang.org/api/gmail/v1"
 )
 
+// TMessageRawArea defines a structure to store information about a Gmail message.
 type TMessageRawArea struct {
 	// Id: The immutable ID of the message.
 	Id string `json:"id,omitempty"`
@@ -34,6 +35,7 @@ type TMessageRawArea struct {
 	Raw string `json:"raw,omitempty"`
 }
 
+// PrepareAllArea takes a Gmail message and returns a TMessageRawArea structure with the fields populated.
 func PrepareRawArea(m *gmail.Message) (TMessageRawArea, error) {
 	pm := new(TMessageRawArea)
 	pm.Id = m.Id
@@ -51,6 +53,7 @@ func PrepareRawArea(m *gmail.Message) (TMessageRawArea, error) {
 	return *pm, nil
 }
 
+// String method returns a formatted string representation of TMessageRawArea
 func (Ma TMessageRawArea) String() string {
 	St := ""
 	St = St + fmt.Sprintf("%s: %s\r\n", "ID", Ma.Id)
@@ -68,11 +71,13 @@ func (Ma TMessageRawArea) String() string {
 	return St
 }
 
+// ToJson method converts the TMessageRawArea structure to a JSON byte array.
 func (Ma TMessageRawArea) ToJson() ([]byte, error) {
 	b, err := json.Marshal(Ma)
 	return b, err
 }
 
+// ToTxt method converts the TMessageRawArea structure to a plain text byte array.
 func (Ma TMessageRawArea) ToTxt() ([]byte, error) {
 	b := []byte(Ma.String())
 	return b, nil

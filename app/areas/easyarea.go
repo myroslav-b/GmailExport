@@ -8,6 +8,7 @@ import (
 	"google.golang.org/api/gmail/v1"
 )
 
+// TMessageEasyArea defines a structure to store information about a Gmail message.
 type TMessageEasyArea struct {
 	// Id: The immutable ID of the message.
 	Id string `json:"id,omitempty"`
@@ -30,15 +31,16 @@ type TMessageEasyArea struct {
 	// in compliance with the RFC 2822 (https://tools.ietf.org/html/rfc2822)
 	// standard. 3. The `Subject` headers must match.
 	ThreadId string `json:"threadId,omitempty"`
-	// Headers of message
+	// Headers: Headers of the message.
 	Headers []struct {
 		Name  string `json:"name,omitempty"`
 		Value string `json:"value,omitempty"`
 	} `json:"headers,omitempty"`
-	//PlainText:
+	//PlainText: The plain text body of the message.
 	PlainText string `json:"plainText,omitempty"`
 }
 
+// PrepareAllArea takes a Gmail message and returns a TMessageEasyArea structure with the fields populated.
 func PrepareEasyArea(m *gmail.Message) (TMessageEasyArea, error) {
 	pm := new(TMessageEasyArea)
 	var err error
@@ -65,6 +67,7 @@ func PrepareEasyArea(m *gmail.Message) (TMessageEasyArea, error) {
 	return *pm, nil
 }
 
+// String method returns a formatted string representation of TMessageEasyArea
 func (Ma TMessageEasyArea) String() string {
 	St := ""
 	St = St + fmt.Sprintf("%s: %s\r\n", "ID", Ma.Id)
@@ -85,11 +88,13 @@ func (Ma TMessageEasyArea) String() string {
 	return St
 }
 
+// ToJson method converts the TMessageEasyArea structure to a JSON byte array.
 func (Ma TMessageEasyArea) ToJson() ([]byte, error) {
 	b, err := json.Marshal(Ma)
 	return b, err
 }
 
+// ToTxt method converts the TMessageEasyArea structure to a plain text byte array.
 func (Ma TMessageEasyArea) ToTxt() ([]byte, error) {
 	b := []byte(fmt.Sprintf("%+v", Ma))
 	return b, nil

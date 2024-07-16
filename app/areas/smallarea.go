@@ -8,6 +8,7 @@ import (
 	"google.golang.org/api/gmail/v1"
 )
 
+// TMessageSmallArea defines a structure to store information about a Gmail message.
 type TMessageSmallArea struct {
 	// Id: The immutable ID of the message.
 	Id string `json:"id,omitempty"`
@@ -44,6 +45,7 @@ type TMessageSmallArea struct {
 	PlainText string `json:"plainText,omitempty"`
 }
 
+// PrepareAllArea takes a Gmail message and returns a TMessageSmallArea structure with the fields populated.
 func PrepareSmallArea(m *gmail.Message) (TMessageSmallArea, error) {
 	pm := new(TMessageSmallArea)
 	var err error
@@ -76,6 +78,7 @@ func PrepareSmallArea(m *gmail.Message) (TMessageSmallArea, error) {
 	return *pm, nil
 }
 
+// String method returns a formatted string representation of TMessageSmallArea
 func (Ma TMessageSmallArea) String() string {
 	St := ""
 	St = St + fmt.Sprintf("%s: %s\r\n", "ID", Ma.Id)
@@ -98,11 +101,13 @@ func (Ma TMessageSmallArea) String() string {
 	return St
 }
 
+// ToJson method converts the TMessageSmallArea structure to a JSON byte array.
 func (Ma TMessageSmallArea) ToJson() ([]byte, error) {
 	b, err := json.Marshal(Ma)
 	return b, err
 }
 
+// ToTxt method converts the TMessageSmallArea structure to a plain text byte array.
 func (Ma TMessageSmallArea) ToTxt() ([]byte, error) {
 	b := []byte(fmt.Sprintf("%+v", Ma))
 	return b, nil

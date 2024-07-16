@@ -10,6 +10,8 @@ import (
 	"google.golang.org/api/gmail/v1"
 )
 
+// export retrieves Gmail messages based on the provided options, processes them,
+// and writes the output to the specified destination
 func export(srv *gmail.Service, user string, opts tOpts) error {
 	var outBlocks [][]byte
 	listMessages, err := search(srv, user, opts.filter())
@@ -26,6 +28,7 @@ func export(srv *gmail.Service, user string, opts tOpts) error {
 	}
 
 	if opts.Statement.Split {
+		// Write each message to a separate file
 		for i, block := range outBlocks {
 			if opts.Statement.Output != "stdout" {
 				filePath := generateFileName(opts.Statement.Output, strconv.Itoa(i))
@@ -44,11 +47,12 @@ func export(srv *gmail.Service, user string, opts tOpts) error {
 			}
 		}
 	} else {
+		// Write all messages to a single file or stdout
 		var file *os.File
 		coma := ""
 		leftBracket := ""
 		rightBracket := ""
-
+		// Set delimiters based on output format
 		switch opts.Statement.Format {
 		case "json":
 			coma = ","
@@ -61,7 +65,7 @@ func export(srv *gmail.Service, user string, opts tOpts) error {
 		default:
 			return fmt.Errorf("unknown output file format")
 		}
-
+		// Open output file or use stdout
 		if opts.Statement.Output != "stdout" {
 			filePath := opts.Statement.Output
 			file, err = os.OpenFile(filePath, os.O_EXCL|os.O_CREATE|os.O_WRONLY, 0644)
@@ -72,6 +76,7 @@ func export(srv *gmail.Service, user string, opts tOpts) error {
 		} else {
 			file = os.Stdout
 		}
+		// Write messages with appropriate delimiters
 		_, err = file.WriteString(leftBracket)
 		if err != nil {
 			return err
@@ -99,6 +104,7 @@ func export(srv *gmail.Service, user string, opts tOpts) error {
 	return nil
 }
 
+// generateFileName creates a unique filename by appending a modifier to the base filename
 func generateFileName(basePath, modifier string) string {
 	dir := filepath.Dir(basePath)
 	file := filepath.Base(basePath)

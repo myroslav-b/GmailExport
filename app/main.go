@@ -20,17 +20,17 @@ import (
 var user = "me"
 
 // https://support.google.com/mail/answer/7190
+// tFilter represents the filter options for searching Gmail messages
 type tFilter struct {
 	MessageId string `short:"m" long:"message" description:"message id"`
 	Label     string `short:"l" long:"label" description:"label"`
 	From      string `short:"f" long:"from" description:"from"`
 	To        string `short:"t" long:"to" description:"to"`
-	//Date    string `short:"d" long:"date" description:"date"`
-	Subject string `short:"s" long:"subject" description:"subject"`
+	Subject   string `short:"s" long:"subject" description:"subject"`
 }
 
+// query constructs a Gmail search query string from the filter options
 func (filter tFilter) query() string {
-	//return strings.Join([]string{filter.messageId(), filter.label(), filter.from(), filter.to(), filter.subject()}, " AND ")
 	ss := []string{filter.messageId(), filter.label(), filter.from(), filter.to(), filter.subject()}
 	q := ""
 	for _, s := range ss {
@@ -45,6 +45,7 @@ func (filter tFilter) query() string {
 	return q
 }
 
+// Helper methods to construct individual query parts
 func (filter tFilter) messageId() string {
 	s := ""
 	if filter.MessageId != "" {
@@ -85,6 +86,7 @@ func (filter tFilter) subject() string {
 	return s
 }
 
+// tStatement represents the output options for the exported messages
 type tStatement struct {
 	Output string `short:"O" long:"output" default:"stdout" optional:"non-empty" optional-value:"gmail" description:"output path: stdout - if missing, else output to disk; value_of_param - template for the name (the equal sign (=) is required), or gmail - if option occurs without an argument"`
 	Split  bool   `short:"S" long:"split" description:"split output"`
@@ -92,6 +94,7 @@ type tStatement struct {
 	Area   string `short:"A" long:"area" choice:"raw" choice:"all" choice:"small" choice:"easy" default:"all" description:"fullness of the output"`
 }
 
+// tOpts combines the filter and statement options
 type tOpts struct {
 	Statement tStatement `group:"Presentation of results"`
 	Filter    tFilter    `group:"Selection conditions"`
