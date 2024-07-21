@@ -97,7 +97,7 @@ func (Ma TMessageAllArea) String() string {
 	for _, label := range Ma.LabelIds {
 		St = St + fmt.Sprintf("%s, ", label)
 	}
-	St = St + fmt.Sprintln()
+	St = St + fmt.Sprintf("%s\r\n", "")
 	St = St + fmt.Sprintf("%s: %v\r\n", "Size Estimate", Ma.SizeEstimate)
 	St = St + fmt.Sprintf("%s: %s\r\n", "Snippet", Ma.Snippet)
 	St = St + fmt.Sprintf("%s: %s\r\n", "Thread ID", Ma.ThreadId)
