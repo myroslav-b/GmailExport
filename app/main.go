@@ -1,11 +1,5 @@
 package main
 
-// https://developers.google.com/gmail/api/quickstart/go
-// https://github.com/googleapis/google-api-go-client/blob/main/GettingStarted.md
-// https://developers.google.com/identity/protocols/oauth2
-// https://habr.com/ru/articles/713442/
-// https://medium.com/readytowork-org/gmail-service-in-go-golang-9a4486b18d41
-
 import (
 	"context"
 	"gmailexport/app/getclient"
@@ -20,7 +14,6 @@ import (
 
 var user = "me"
 
-// https://support.google.com/mail/answer/7190
 // tFilter represents the filter options for searching Gmail messages
 type tFilter struct {
 	MessageId string `short:"m" long:"message" description:"message id"`

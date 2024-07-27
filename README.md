@@ -96,4 +96,14 @@ All startup options can be found by running the command:
    ```
    ./gmaiexport --subject "Meeting Notes" --area raw
    ```
+## Useful links
 
+https://developers.google.com/gmail/api/quickstart/go
+
+https://mailtrap.io/blog/send-emails-with-gmail-api/
+
+https://medium.com/readytowork-org/gmail-service-in-go-golang-9a4486b18d41
+
+https://developers.google.com/identity/protocols/oauth2
+
+https://support.google.com/mail/answer/7190
