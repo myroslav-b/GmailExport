@@ -4,6 +4,7 @@ package main
 // https://github.com/googleapis/google-api-go-client/blob/main/GettingStarted.md
 // https://developers.google.com/identity/protocols/oauth2
 // https://habr.com/ru/articles/713442/
+// https://medium.com/readytowork-org/gmail-service-in-go-golang-9a4486b18d41
 
 import (
 	"context"
@@ -24,9 +25,9 @@ var user = "me"
 type tFilter struct {
 	MessageId string `short:"m" long:"message" description:"message id"`
 	Label     string `short:"l" long:"label" description:"label"`
-	From      string `short:"f" long:"from" description:"from"`
-	To        string `short:"t" long:"to" description:"to"`
-	Subject   string `short:"s" long:"subject" description:"subject"`
+	From      string `short:"f" long:"from" description:"sender's email address"`
+	To        string `short:"t" long:"to" description:"recipient's email address"`
+	Subject   string `short:"s" long:"subject" description:"email subject"`
 }
 
 // query constructs a Gmail search query string from the filter options
@@ -88,8 +89,8 @@ func (filter tFilter) subject() string {
 
 // tStatement represents the output options for the exported messages
 type tStatement struct {
-	Output string `short:"O" long:"output" default:"stdout" optional:"non-empty" optional-value:"gmail" description:"output path: stdout - if missing, else output to disk; value_of_param - template for the name (the equal sign (=) is required), or gmail - if option occurs without an argument"`
-	Split  bool   `short:"S" long:"split" description:"split output"`
+	Output string `short:"O" long:"output" default:"stdout" optional:"non-empty" optional-value:"gmail" description:"output path: stdout - if missing, else output to file; value_of_param - template for the name (the equal sign (=) is required), or gmail - if option occurs without an argument"`
+	Split  bool   `short:"S" long:"split" description:"split output into multiple files"`
 	Format string `short:"F" long:"format" choice:"json" choice:"txt" default:"json" description:"output format"`
 	Area   string `short:"A" long:"area" choice:"raw" choice:"all" choice:"small" choice:"easy" default:"all" description:"fullness of the output"`
 }
